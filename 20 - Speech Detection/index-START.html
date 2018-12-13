@@ -10,8 +10,56 @@
   </div>
 
 <script>
+  //here we are setting it to be 'SpeechRecognition' even if it is webkitSpeechRecognition
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  //creating a new instance of SpeechRecognition
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+
+
+  //now we will make it to where we create a new paragraph element whenever we are done talking
+  let p = document.createElement('p');
+
+  //now we need to get the div the new paragraph is going to be inside...in this case the div has a class of 'words'
+  const words = document.querySelector('.words');
+  //last we attach our new element to the class  Piece of 🍰!!
+  words.appendChild(p);
+
+  // Next: this is going to work for clicks
+  //So we take an addEventListener and listen for 'result'
+
+  recognition.addEventListener('result', e => {
+    // console.log(e.results);
+    //now we are gong to take our nest of data and convert it into a string
+    const transcript = Array.from(e.results)
+    //map here to get an array of the results
+      .map(result => result[0])
+      //map the result to get an array of the transcript
+      .map(result => result.transcript)
+      //join the transcripts to make a strings
+      .join('')
+
+      p.textContent = transcript;
+      if(e.results[0].isFinal) {
+        p = document.createElement('p');
+        words.appendChild(p);
+      }
+      //  Fun applications for this tool
+      // if(transcript.includes('get the weather')) {
+      //   console.log('I`m not your slave!');
+      // }
+      console.log(transcript);
+  });
+
+  /*  the reason why it stops typing is because it unbinds itself when we are
+  done talking */
+
+  //what we need to do is add a seocnd evenListener to listen for the 'end' of
+  // SpeechRecognition
+  recognition.addEventListener('end', recognition.start);
+
+recognition.start();
 
 </script>
 
