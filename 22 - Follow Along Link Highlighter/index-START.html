@@ -26,7 +26,39 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    // WE WILL BE USING getBoundingClientRect AND APPLYING IT TO THE INLINE STYLE
+    
+    //get things that will be hovered
+    const triggers = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+    //here we add a class of 'highlight'
+    highlight.classList.add('highlight');
+
+    function highlightLink() {
+      // console.log(this);
+      const linkCoords = this.getBoundingClientRect();
+      console.log(linkCoords);
+      
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX
+      };
+
+      //now that we have the element, we can add the style
+      highlight.style.width = `${linkCoords.width}px`;
+      highlight.style.width = `${linkCoords.height}px`;
+
+      //we will use the .transform property for a smooth animation
+      highlight.style.transform = `translate(${linkCoords.left}px, ${linkCoords.right}px)`;
+
+    }
+
+triggers.forEach(a => a.addEventListener('mouseover', highlightLink));
+
+//now we need to find out how big the element is that we highlighted and where on the page is the highlight
+
   </script>
 </body>
 </html>
