@@ -39,6 +39,35 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+  
+
+function logText(e) {
+  console.log(this.classList.value);
+  //this will stop the "bubble" on the one div you have clicked on
+  //e.stopPropogation();//you can wrap this in an if statement if you wanted to get the middle one
+  // console.log(this);
+}
+// document.body.addEventListener('click', logText);
+divs.forEach(div => div.addEventListener('click', logText, {
+  //capture will run on the way down, rather than on the way up
+  capture: false,
+  // capture: true
+  once: true //listens for a click and "unbinds itself"
+}));
+
+// NOTE
+// unbinding is the same thing as doing this
+// div.removeEventListener('clic', logText, capture? boolean);
+
+button.addEventListener('click', () =>  {
+  console.log('CLICK!!!!');
+}, {
+  once: true
+});
+
+
 
 </script>
 </body>
