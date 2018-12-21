@@ -35,6 +35,47 @@
   </div>
 
 <script>
+  //when you click down, we add a class of active
+  const slider = document.querySelector('.items');
+  //now we need a couple of variables, we use let, because they are all going to be updated
+  let isDown = false; 
+  let scrollX;//these do not have values because we will assign them later
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+
+    startX = e.pageX - slider.offsetLeft;//this handles any margins
+    // console.log(e.pageX);
+    scrollLeft = slider.scrollLeft;
+  });
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+  slider.addEventListener('mousemove', (e) => {
+    if(!isDown) return; //stop the fn from running
+    // console.count(isDown);
+    // console.log(startX);
+    e.preventDefault();
+    //now we need to find out where the cursor is when the user moves it
+    const x = e.pageX - slider.offsetLeft;
+    // console.log({x, startX});
+    const walk = x - startX * 3;  //tells us distance from start to finish and for every slide moved, you move it 3px
+    // console.log(walk);
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  
+// FUN PROJECT
+//USING THESE FUNCTIONS YOU CAN IMPLEMENT A DRAG AND DROP
+  
+
 </script>
 
   </body>

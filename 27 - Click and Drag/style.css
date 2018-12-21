@@ -41,7 +41,7 @@ body {
   background: rgba(255,255,255,0.3);
   cursor: grabbing;
   cursor: -webkit-grabbing;
-  transform: scale(1);
+  transform: scale(1);/* this is what give the cool effect of zooming in and out on click or "when active" */
 }
 
 .item {
