@@ -31,7 +31,7 @@ function displayTimeLeft(seconds) {
     const minutes = Math.floor(seconds / 60); //Math.floor() grabs the lower bound number
     const remainderSeconds = seconds % 60;
     // NOW WE JOIN MINUTES AND SECONDS TOGETHER TO MAKE IT LOOK NICE AND PRETTY
-    const displayTime = `${minutes}minutes, and ${remainderSeconds < 10 ? '0' : ''}${remainderSeconds} seconds until break time`;
+    const displayTime = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
     document.title = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
     timerDisplay.textContent = displayTime;
 }
@@ -42,7 +42,7 @@ function timeEndedDisplay(timestamp) {
     const end = new Date(timestamp);
     const hour = end.getHours();
     const minutes = end.getMinutes();
-    endedTime.textContent = `Be back at ${hour > 12 ? hour - 12 : ''}:${minutes < 10 ? '0' : ''}${minutes}`;
+    endedTime.textContent = `Ends at ${hour > 12 ? hour - 12 : '12'}:${minutes < 10 ? '0' : ''}${minutes}`;
 }
 
 function startTimer() {
