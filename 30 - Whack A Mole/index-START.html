@@ -36,6 +36,64 @@
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
+  let lastHole;
+  let timeUp = false;
+  let score = 0;
+
+  //game is 10 seconds long
+  //for how long the mole keeps his head up, is going to be random
+
+  //Function for a random amount of time
+  function randomTime(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  //function for a random hole--this is a "Get me a random dom element" function
+  function randomHole(holes) {
+    const idx = Math.floor(Math.random() * holes.length);
+    const hole = holes[idx];
+    // console.log(hole);
+    if (hole ===lastHole) {
+      console.log('Ah nah, that`s the same one bud');
+      return randomHole(holes);
+    }
+    lastHole = hole;
+    return hole;
+  }
+
+  function peep() {
+    const time = randomTime(200, 1000);
+    const hole = randomHole(holes);
+    hole.classList.add('up');
+
+    //AFTER THE RANDOM AMOUNT OF TIME--WE NEED TO REMOVE THE 'up'
+    setTimeout(() => {
+      hole.classList.remove('up');
+      if(!timeUp) peep();
+    }, time);
+  }
+
+
+  //function to add to the scoreboard
+  function startGame() {
+    scoreBoard.textContent = 0;
+    timeUp = false;
+    peep();
+    score = 0;
+    //after 10 seconds we want to set the timeUp to true
+    setTimeout(() => timeUp = true, 10000);
+  }
+
+  function bonk(e) {
+    console.log(e);
+    if(!e.isTrusted) return;  //cheater!!
+    
+    score++;
+    this.classList.remove('up');
+    scoreBoard.textContent = score;
+  }
+
+  moles.forEach(mole =>  mole.addEventListener('click', bonk));
 
 </script>
 </body>
